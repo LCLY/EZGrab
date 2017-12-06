@@ -1,3 +1,20 @@
+/** 
+ * Here is the api call and calculation for recommendation
+ * 
+ * How to use this? See button2_click() 
+ * For instance, 
+ * Graber's Starting point : Hilltop
+ * Graber's destination: LWSN
+ * Store Location: Ford Dinning court
+ * Requester Location: 3rd
+ * 
+ * 
+ * 
+ * Qinmin Wang
+ * 
+*/
+
+
 function body_onload() {
     testButton.onclick = button_click;
     testButton2.onclick = button2_click;
@@ -6,7 +23,7 @@ function body_onload() {
 
 function checkRecommend(graberSta, graberDes, storeLoc, reqestLoc) {
 
-    if (graberSta != null || graberDes != null || storeLoc != null || reqestLoc != null) {
+    if (graberSta == null || graberDes == null || storeLoc == null || reqestLoc == null) {
         return false;
     }
 
@@ -16,10 +33,12 @@ function checkRecommend(graberSta, graberDes, storeLoc, reqestLoc) {
 
 
     //if time difference larger than 10 mins, would't recommend
-    if(timeDiff > 600){
+    if(timeDiff > 1200){
+        console.log("don't recommend!!!")
         return false;
-    }else{
 
+    }else{
+        console.log("JUST DO IT MAN!!!")
         return true; 
 
     }
@@ -32,7 +51,8 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
 
     var params1 = {
         origins: graberSta,
-        destinations: storeLoc + "|" + graberDes,  
+        destinations: storeLoc + "|" + graberDes,
+        mode: "walking",  
         key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU"
 
     };
@@ -40,6 +60,7 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
     var params2 = {
         origins: storeLoc,
         destinations: reqestLoc,
+        mode: "walking",
         key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU"
 
     }
@@ -47,6 +68,7 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
     var params3 = {
         origins: reqestLoc,
         destinations: graberDes,
+        mode: "walking",
         key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU"
 
     }
@@ -55,19 +77,76 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
     var str2 = jQuery.param(params2);
     var str3 = jQuery.param(params3);
 
-    var queryStr1= "https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str1);
-    var queryStr2= "https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str2);
-    var queryStr3= "https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str3);
+    var queryStr1= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str1);
+    var queryStr2= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str2);
+    var queryStr3= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str3);
 
-    jQuery.get(queryStr1,function(json){
-        alert("JSON DATA:" + json);
-        //json.rows[0].elements[0].duration.value
+    // jQuery.get(queryStr1,function(json){
+    //     //var res = JSON.parse(json);
+    //     console.log("response is: !!!!!!!!!!" + json);
+    //     //json.rows[0].elements[0].duration.value
 
+    // });
+
+    var duration1;  //graber to store
+    var duration2;  //graber to own destination
+    var duration3;  //store to requester's location
+    var duration4;  //requester's location to graber's destination
+
+    //call API here
+    $.ajax({
+        url: queryStr1,
+        dataType: 'json',
+        success: function (resp1) {
+            console.log(resp1);
+            duration1 = resp1.rows[0].elements[0].duration.value;
+            duration2 = resp1.rows[0].elements[1].duration.value;
+
+            $.ajax({
+                url: queryStr2,
+                dataType: 'json',
+                success: function (resp2) {
+                    console.log(resp2);
+                    duration3 = resp2.rows[0].elements[0].duration.value;
+                    
+                    $.ajax({
+                        url: queryStr3,
+                        dataType: 'json',
+                        success: function (resp3) {
+                            console.log(resp3);
+                            //can also work in this way instead of JSON.parse
+
+                            duration4 = resp3.rows[0].elements[0].duration.value;
+                            
+                
+                        },
+                        error: function (req, status, err) {
+                            console.log('Something went wrong', status, err);
+                        }
+                    });
+        
+                },
+                error: function (req, status, err) {
+                    console.log('Something went wrong', status, err);
+                }
+            });
+
+        },
+        error: function (req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
     });
+
 
     console.log(queryStr1);
     console.log(queryStr2);
     console.log(queryStr3);
+
+    return duration2 + duration3 + duration4 - duration1;
+
+
+
+
     
 
 
@@ -85,8 +164,10 @@ function cleanup(strQ){
 }
 
 function button2_click(){
-    calculateTimeDiff("Hilltop, West Lafayette", "LWSN, West Lafayette", "Subway, Purdue", "third Street, West Lafayette");
+    
+    var Result = checkRecommend("Hilltop, West Lafayette", "LWSN, West Lafayette", "Ford Dinning Court, West Lafayette, IN 47906", "third Street, West Lafayette");
 
+    console.log(Result);
 }
 
 function button_click() {
