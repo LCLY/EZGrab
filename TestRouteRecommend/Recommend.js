@@ -55,19 +55,65 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
     var str2 = jQuery.param(params2);
     var str3 = jQuery.param(params3);
 
-    var queryStr1= "https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str1);
-    var queryStr2= "https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str2);
-    var queryStr3= "https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str3);
+    var queryStr1= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str1);
+    var queryStr2= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str2);
+    var queryStr3= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str3);
 
-    jQuery.get(queryStr1,function(json){
-        alert("JSON DATA:" + json);
-        //json.rows[0].elements[0].duration.value
+    // jQuery.get(queryStr1,function(json){
+    //     //var res = JSON.parse(json);
+    //     console.log("response is: !!!!!!!!!!" + json);
+    //     //json.rows[0].elements[0].duration.value
 
+    // });
+
+
+    //call API here
+    $.ajax({
+        url: queryStr1,
+        dataType: 'json',
+        success: function (resp1) {
+            console.log(resp1);
+
+            $.ajax({
+                url: queryStr2,
+                dataType: 'json',
+                success: function (resp2) {
+                    console.log(resp2);
+                    
+                    $.ajax({
+                        url: queryStr3,
+                        dataType: 'json',
+                        success: function (resp3) {
+                            console.log(resp3);
+                            
+                
+                        },
+                        error: function (req, status, err) {
+                            console.log('Something went wrong', status, err);
+                        }
+                    });
+        
+                },
+                error: function (req, status, err) {
+                    console.log('Something went wrong', status, err);
+                }
+            });
+
+        },
+        error: function (req, status, err) {
+            console.log('Something went wrong', status, err);
+        }
     });
 
-    console.log(queryStr1);
-    console.log(queryStr2);
-    console.log(queryStr3);
+    // console.log(queryStr1);
+    // console.log(queryStr2);
+    // console.log(queryStr3);
+
+
+
+
+
+
     
 
 
