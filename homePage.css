@@ -1,15 +1,15 @@
-#backgroundImage{
-    position: relative;
-    animation-name: slide;
-    animation-duration: 2s;
-    animation-fill-mode: forwards;
+#backgroundImage {
+    padding: 5px;
+    text-align: center;
+    background-color: #e5eecc;
+    border: solid 1px #c3c3c3;
 }
 
-@keyframes slide{
-    0% {top:0px;}
-    100% {top:80px;}
+#backgroundImage {   
+    display: none;
+    height:800px;
+    width:1100px;
 }
-
 .modal-content{
     width:400px;
     height:370px;
@@ -112,13 +112,13 @@
     height:330px;
 }
 
-p {
+#lblAccountExist {
     position: absolute;
     font-size: 13px;
-    top:10px;
-    right:240px;
     width:200px;
-   
+    right:240px;
+    top:10px;
+        
 }
 
 #linkToLogin{
@@ -128,3 +128,5 @@ p {
     font-size:13px;
    
 }
+
+

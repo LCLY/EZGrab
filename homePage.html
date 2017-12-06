@@ -26,7 +26,7 @@
         <link rel="stylesheet" type="text/css" href="homePage.css">
     </head>
 
-    <body onload = "body_onload()">      
+    <body>      
                
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -34,7 +34,7 @@
                 <a class="navbar-brand" href="homePage.html">EZGrab</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="#messagewindow" id="btnHome">Home</a></li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Page 1-1</a></li>
@@ -42,7 +42,7 @@
                     <li><a href="#">Page 1-3</a></li>
                 </ul>
                 </li>
-                <li><a href="#">Page 2</a></li>
+                <li><a href="#" id="page2">Page 2</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a data-target="#signUpModal" data-toggle="modal" href=#signUpModal><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -118,7 +118,156 @@
                                                 
                     </div>
                 </div>
-            </div>          
+                <div id="tableDemo">
+                    <h2>Hover Rows</h2>
+                    <p>The .table-hover class enables a hover state on table rows:</p>            
+                    <table class="table table-hover">
+                    <thead>
+                        <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                        </tr>
+                        <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
         </div>          
             
     </body>
