@@ -9,3 +9,122 @@
     0% {top:0px;}
     100% {top:80px;}
 }
+
+.modal-content{
+    width:400px;
+    height:370px;
+}
+
+.modal-body{
+    width:300px;
+    height:300px;
+}
+.modal-footer{
+    position:absolute;
+    width:398px;
+    height:40px;
+    bottom:5px;
+}   
+
+
+#lblSignUpUsername{
+    position: absolute;
+    right:205px;
+    top:5px;
+}
+
+#inputSignUpUsername{
+    position: absolute; 
+    width:270px;
+    top:30px;
+}
+
+#lblSignUpPassword{
+    position: absolute;
+    top:70px;
+    right:205px;
+}
+
+#inputSignUpPassword{
+    position: absolute;
+    width:270px; 
+    top:95px;
+}
+
+#lblSignUpConfirmPassword{
+    position: absolute;
+    top:135px;
+    right:149px;
+}
+
+
+#inputSignUpConfirmPassword{
+    position: absolute;
+    width:270px; 
+    top:160px;
+}
+
+
+#btnSignUp{
+    position: absolute;
+    width:270px;
+    top:210px;
+}
+
+#closeButton{
+    position: absolute;
+    right:5px;
+    bottom:1px;
+}
+
+#lblLoginUsername{
+    position: absolute;
+    right:205px;
+    top:5px;
+}
+
+#inputLoginUsername{
+    position: absolute; 
+    width:270px;
+    top:30px;
+}
+
+#lblLoginPassword{
+    position: absolute;
+    top:70px;
+    right:205px;
+}
+
+#inputLoginPassword{
+    position: absolute;
+    width:270px; 
+    top:95px;
+}
+
+
+#btnLogin{
+    position: absolute;
+    width:270px;
+    top:150px;
+}
+
+#loginModalContent{
+    height:330px;
+}
+
+p {
+    position: absolute;
+    font-size: 13px;
+    top:10px;
+    right:240px;
+    width:200px;
+   
+}
+
+#linkToLogin{
+    position: absolute;
+    right:200px;
+    top:10px;
+    font-size:13px;
+   
+}
