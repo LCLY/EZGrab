@@ -1,0 +1,11 @@
+#backgroundImage{
+    position: relative;
+    animation-name: slide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes slide{
+    0% {top:0px;}
+    100% {top:80px;}
+}
