@@ -10,10 +10,14 @@
 
         <script type="text/x-template" id="order-entry-template">
             <div class="orderEntryDiv">
-                <label class="orderEntryBuyLocationLbl"> {{ buylocation }}</label>
-                <label class="orderEntryDropLocationLbl"> {{ droplocation }}</label>
-                <label class="orderEntryRecipientLbl"> {{ recipient }}</label>
-                <label class="orderEntryNotesLbl"> {{ notes }}</label>
+                <label class="orderEntryBuyLocationLbl"> Buy Location: </label>
+                <label class="orderEntryBuyLocation"> {{ buylocation }} </label>
+                <label class="orderEntryDropLocationLbl"> Drop Location: </label>
+                <label class="orderEntryDropLocation"> {{ droplocation }} </label>
+                <label class="orderEntryRecipientLbl"> Recipient: </label>
+                <label class="orderEntryRecipient"> {{ recipient }} </label> 
+                <label class="orderEntryNotesLbl"> Notes: </label>
+                <label class="orderEntryNotes"> {{ notes }} </label>
             </div>
         </script>
     </head>
@@ -56,13 +60,30 @@
                 
                 <transition name="fade">
                     <div id="mainForm" v-if="signIn">
-                        <label id="buyLocationLbl">Buy Location:</label>
-                        <input id="buyLocation" type="text" />
+                        <label id="originLbl">Origin:</label>
+                        <input id="origin" type="text" />
 
-                        <label id="dropLocationLbl">Drop Location:</label>
-                        <input id="dropLocation" type="text" />
+                        <label id="destinationLbl">Destination:</label>
+                        <input id="destination" type="text" />
 
-                        <button id="recommendMe">Recommend Me!</button>
+                        <button id="recommendMeBtn">Recommend Me!</button>
+
+                        <button id="addBuyRequestBtn" v-on:click="showAddForm = true">Add Buy Request</button>
+                        
+                        <transition name="fade">
+                            <div id="addBuyRequestForm" v-show="showAddForm">
+                                <label id="buyLocationLbl">Buy Location:</label>
+                                <input id="buyLocation" type="text" />
+
+                                <label id="dropLocationLbl">Drop Location:</label>
+                                <input id="dropLocation" type="text" />
+
+                                <label id="notesLbl">Notes:</label>
+                                <textarea id="notes"></textarea>
+
+                                <button id="addBtn" v-on:click="addBuyRequest">Add</button>
+                            </div>
+                        </transition>
 
                         <transition-group name="fade">
                             <order-entry v-for="order in orders" 
@@ -74,6 +95,8 @@
                                 v-bind:id="order.ID">
                             </order-entry>
                         </transition-group>
+
+                        
                     </div>
                 </transition>
             </div>

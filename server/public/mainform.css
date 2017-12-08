@@ -4,39 +4,46 @@
     font-family:'Open Sans', san-serif;
 }
 
-#buyLocationLbl {
+#originLbl {
     position:absolute;
     width:150px;
     top:50px;
     left:50px;
 }
 
-#buyLocation {
+#origin {
     position:absolute;
     width:200px;
     top:50px;
-    left:180px;
+    left:120px;
 }
 
-#dropLocationLbl {
+#destinationLbl {
     position:absolute;
     width:150px;
     top:50px;
-    left:450px;
+    left:350px;
 }
 
-#dropLocation {
+#destination {
     position:absolute;
     width:200px;
     top:50px;
-    left:600px;
+    left:460px;
 }
 
-#recommendMe {
+#recommendMeBtn {
     position:absolute;
     width:150px;
     top:50px;
-    left:850px;
+    left:700px;
+}
+
+#addBuyRequestBtn {
+    position:absolute;
+    width:150px;
+    top:50px;
+    left:870px;
 }
 
 .orderEntryDiv {
@@ -50,6 +57,120 @@
     border:solid;
     border-width:1px;
     margin:auto auto 10px auto;
-    font-family:Arial, Helvetica, sans-serif;
     box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.orderEntryBuyLocationLbl {
+    top:10px;
+    position:absolute;
+    width:650px;
+}
+
+.orderEntryBuyLocation {
+    top:10px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.orderEntryDropLocationLbl {
+    top:40px;
+    position:absolute;
+    width:650px;
+}
+
+.orderEntryDropLocation {
+    top:40px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.orderEntryRecipientLbl {
+    top:70px;
+    position:absolute;
+    width:650px;
+}
+
+.orderEntryRecipient {
+    top:70px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.orderEntryNotesLbl {
+    top:100px;
+    position:absolute;
+    width:650px;
+}
+
+.orderEntryNotes {
+    top:100px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+#addBuyRequestForm {
+    position:relative;
+    left:0px;
+    right:0px;
+    top:100px;
+    margin:auto;
+    width:650px;
+    height:150px;
+    border-style:solid;
+    border-width:1px;
+    padding:10px;
+    margin:auto auto 10px auto;
+    box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+#buyLocationLbl {
+    position:absolute;
+    top:10px;
+    left:10px;
+}
+
+#buyLocation {
+    position:absolute;
+    width:400px;
+    top:10px;
+    left:150px;
+}
+
+#dropLocationLbl {
+    position:absolute;
+    top:40px;
+    left:10px;
+}
+
+#dropLocation {
+    position:absolute;
+    width:400px;
+    top:40px;
+    left:150px;
+}
+
+#notesLbl {
+    position:absolute;
+    top:70px;
+    left:10px;
+}
+
+#notes {
+    position:absolute;
+    width:400px;
+    height:50px;
+    top:70px;
+    left:150px;
+    resize:none;
+}
+
+#addBtn {
+    position:absolute;
+    width:80px;
+    top:10px;
+    left:570px;
 }

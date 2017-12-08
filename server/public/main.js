@@ -11,6 +11,7 @@ function body_onload() {
             signIn:false,
             signInMsg:"",
             orders: [],
+            showAddForm:false,
 
         },
 
@@ -93,6 +94,10 @@ function body_onload() {
                         }
                     }
                 }
+            },
+
+            addBuyRequest: function() {
+                
             }
 
         }
