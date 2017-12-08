@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>EZGrab</title>
+        <script language="javascript" type="text/javascript" src="main.js"></script>
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="signin.css">
+        <link rel="stylesheet" href="mainform.css">
+        <script src="https://vuejs.org/js/vue.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
+    </head>
+
+    <body onload="body_onload()">
+        <div id="app">
+            <div id="navBar">
+                <div id="logo">EZGrab</div>
+                <div id="homeBtn">HOME</div>
+                <div id="buyRequestsBtn">BUY REQUESTS</div>
+                <div id="grabRequestsBtn">GRAB REQUESTS</div>
+                <div id="settingsBtn">SETTINGS</div>
+            </div>
+
+
+            <div id="mainDiv">
+                <transition name="fade">
+                    <div id="signInForm" v-if="!signIn">
+                        <label id="signInFormHdr">SIGN IN</label>
+
+                        <label id="signInUsernameLbl">Username</label>
+                        <input id="signInUsername" type="text" />
+
+                        <label id="signInPasswordLbl">Password</label>
+                        <input id="signInPassword" type="password" />
+
+                        <button id="signInBtn" v-on:click="checkSignIn">
+                            Sign In
+                        </button>
+
+                        <!--<label id="rememberLbl">Remember Me</label>
+                        <input id="rememberChkBox" type="checkbox"/>-->
+
+                        <label id="createAccountLbl">New to EZGrab?</label>
+                        <button id="createAccountBtn">Create Account</button>
+
+                        <label id="signInMsg">{{ signInMsg }}</label>
+                    </div>
+                </transition>
+                
+                <transition name="fade">
+                    <div id="mainForm" v-if="signIn">
+                        
+                    </div>
+                </transition>
+
+                </div>
+            </div>
+
+        </div>
+    </body>
+</html>
