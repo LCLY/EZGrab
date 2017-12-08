@@ -3,14 +3,13 @@ var bodyParser = require("body-parser");
 var cors = require('cors');
 var mysql = require('mysql');
 
-var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'ezgrabdbinstance.cfsrlrsrxtms.us-east-2.rds.amazonaws.com',
-  user     : 'EZGrabUser',
-  password : 'CS252Lab6',
-  database : 'ezgrab',
+    host     : 'ezgrabdbinstance.cfsrlrsrxtms.us-east-2.rds.amazonaws.com',
+    user     : 'EZGrabUser',
+    password : 'CS252Lab6',
+    database : 'ezgrab',
 });
- 
+
 var app = express();
 app.use(cors());
 
@@ -33,10 +32,11 @@ app.post('/createAccount', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
     var email = req.body.email;
+    var mobileNumber = req.body.mobileNumber;
 
     if (username == null) {
         return res.status(400).json({ message: "Invalid username."});
-    } 
+    }
 
     if (password == null) {
         return res.status(400).json({ message: "Invalid password"});
@@ -46,8 +46,12 @@ app.post('/createAccount', function (req, res) {
         return res.status(400).json({ message: "Invalid email"});
     }
 
-    var sql = "insert into userAccounts (Username, Password, Email) values (?, ?, ?)";
-    var args = [username, password, email];
+    if (mobileNumber == null) {
+        return res.status(400).json({ message: "Invalid mobile number" });
+    }
+
+    var sql = "insert into userAccounts (Username, Password, Email, MobileNumber) values (?, ?, ?, ?)";
+    var args = [username, password, email, mobileNumber];
     sql = mysql.format(sql, args);
 
     connection.query(sql, function (error, results, fields) {
@@ -65,18 +69,19 @@ app.post('/updateAccount', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
     var email = req.body.email;
+    var mobileNumber = req.body.mobileNumber;
 
     if (username != null) {
         var sql = "update userAccounts set Username = ? where Username = ?";
         var args = [username, currentUser];
         sql = mysql.format(sql, args);
-    
+
         connection.query(sql, function (error, results, field) {
             if (error) {
                 console.log(error);
                 return res.status(400).json({ message: "Username has been taken"});
             }
-    
+
             return res.status(200).json({ message: "Success"});
         });
     }
@@ -85,13 +90,13 @@ app.post('/updateAccount', function (req, res) {
         var sql = "update userAccounts set Password = ? where Username = ?";
         var args = [password, currentUser];
         sql = mysql.format(sql, args);
-    
+
         connection.query(sql, function (error, results, field) {
             if (error) {
                 console.log(error);
                 return res.status(500).json({ message: "Internal Server Error"});
             }
-    
+
             return res.status(200).json({ message: "Success"});
         });
     }
@@ -100,14 +105,30 @@ app.post('/updateAccount', function (req, res) {
         var sql = "update userAccounts set Email = ? where Username = ?";
         var args = [email, currentUser];
         sql = mysql.format(sql, args);
-    
+
         connection.query(sql, function (error, results, field) {
             if (error) {
                 console.log(error);
                 return res.status(500).json({ message: "Internal Server Error"});
             }
-    
+
             return res.status(200).json({ message: "Success"});
+        });
+    }
+
+
+    if (mobileNumber != null) {
+        var sql = "update userAccounts set MobileNumber = ? where Username = ?";
+        var args = [mobileNumber, currentUser];
+        sql = mysql.format(sql, args);
+
+        connection.query(sql, function (error, results, field) {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ message: "Internal Server Error" });
+            }
+
+            return res.status(200).json({ message: "Success" });
         });
     }
 });
@@ -141,7 +162,7 @@ app.post('/signin', function (req, res) {
 app.post('/ordersadd', function (req, res) {
     var buyLocation = req.body.buyLocation;
     var dropLocation = req.body.dropLocation;
-    var sender = req.body.sender;
+    var recipient = req.body.recipient;
     var notes = req.body.notes;
 
     if (!buyLocation) {
@@ -152,16 +173,16 @@ app.post('/ordersadd', function (req, res) {
         return res.status(400).json({ message: "Drop Location is empty"});
     }
 
-    if (!sender) {
-        return res.status(400).json({ message: "Sender is empty"});
+    if (!recipient) {
+        return res.status(400).json({ message: "Recipient is empty"});
     }
 
     if (!notes) {
         return res.status(400).json({ message: "Notes is empty"});
     }
 
-    var sql = "insert into orders (BuyLocation, DropLocation, Sender, Notes) values (?, ?, ?, ?)";
-    var args = [buyLocation, dropLocation, sender, notes];
+    var sql = "insert into orders (BuyLocation, DropLocation, Recipient, Notes) values (?, ?, ?, ?)";
+    var args = [buyLocation, dropLocation, recipient, notes];
     sql = mysql.format(sql, args);
 
     connection.query(sql, function (error, results, fields) {
@@ -175,14 +196,14 @@ app.post('/ordersadd', function (req, res) {
 });
 
 app.post('/orderstake', function(req, res) {
-    var recipient = req.body.recipient;
+    var sender = req.body.sender;
     var orderid = req.body.orderid;
 
-    if (!recipient) {
-        return res.status(400).json({ message: "Recipient is empty"});
+    if (!sender) {
+        return res.status(400).json({ message: "sender is empty"});
     }
 
-    var sql = "update orders set Recipient = ? where ID = ?";
+    var sql = "update orders set Sender = ? where ID = ?";
     var args = [recipient, orderid];
     sql = mysql.format(sql, args);
 
@@ -196,26 +217,7 @@ app.post('/orderstake', function(req, res) {
     });
 });
 
-app.get('/listallorders',function(req,res){
-    // var senderStart = req.body.senderStart;
-    // var senderDestination = req.body.senderDestination;
-    //
-    // if(senderStart == "" ||senderDestination == ""){
-    //     return res.status(400).json({ message: "SenderStart or SenderDestination is empty!"})
-    // }
-
-    var sql = "select * from orders";
-    connection.query(sql, function(err, rows, fields) {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({message: "Internal Server Error"});
-        }
-        return res.status(200).json(rows);
-    });
-
-
-});
-
+//The orders that the sender decided to take
 app.get('/senderOrdersGet', function(req, res) {
     var currentUser = req.query.currentUser;
 
@@ -250,7 +252,22 @@ app.get('/recipientOrdersGet', function(req, res) {
     })
 });
 
+app.get('/getOpenOrders', function(req, res) {
+    var currentUser = "";
 
+    var sql = "select * from orders where Sender = ?";
+    var args = [currentUser];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql,function (error, results, field) {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal Server Error"});
+        }
+
+        return res.status(200).json(results);
+    })
+});
 
 var port = process.env.PORT || 8000;
 

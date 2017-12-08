@@ -1,0 +1,55 @@
+#mainForm {
+    height:100%;
+    width:100%;
+    font-family:'Open Sans', san-serif;
+}
+
+#buyLocationLbl {
+    position:absolute;
+    width:150px;
+    top:50px;
+    left:50px;
+}
+
+#buyLocation {
+    position:absolute;
+    width:200px;
+    top:50px;
+    left:180px;
+}
+
+#dropLocationLbl {
+    position:absolute;
+    width:150px;
+    top:50px;
+    left:450px;
+}
+
+#dropLocation {
+    position:absolute;
+    width:200px;
+    top:50px;
+    left:600px;
+}
+
+#recommendMe {
+    position:absolute;
+    width:150px;
+    top:50px;
+    left:850px;
+}
+
+.orderEntryDiv {
+    position:relative;
+    width:650px;
+    height:150px;
+    left:0px;
+    right:0px;
+    top:100px;
+    padding:10px;
+    border:solid;
+    border-width:1px;
+    margin:auto auto 10px auto;
+    font-family:Arial, Helvetica, sans-serif;
+    box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}

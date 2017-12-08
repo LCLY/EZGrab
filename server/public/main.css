@@ -1,0 +1,120 @@
+body {
+    margin:0px;
+}
+#app {
+    width:100%;
+    height:100%;
+}
+
+#navBar {
+    position:absolute;
+    height:100%;
+    width:20%;
+    background-color:rgb(0, 153, 255);
+}
+
+#logo {
+    position:absolute;
+    width:100%;
+    height:100px;
+    line-height:100px;
+    font-size:25px;
+    text-align:center;
+    vertical-align:middle;
+    font-size:50px;
+    font-family:'Open Sans', san-serif;
+}
+
+#homeBtn {
+    position:absolute;
+    top:100px;
+    width:100%;
+    height:100px;
+    line-height:100px;
+    font-size:25px;
+    text-align:center;
+    vertical-align:middle;
+    font-family:'Open Sans', san-serif;
+    cursor:pointer;
+    color: white;
+}
+
+#homeBtn:hover {
+    background-color:rgb(226, 226, 226);
+    color:black;
+}
+
+#buyRequestsBtn {
+    position:absolute;
+    top:200px;
+    width:100%;
+    height:100px;
+    line-height:100px;
+    font-size:25px;
+    text-align:center;
+    margin:auto;
+    font-family:'Open Sans', san-serif;
+    cursor:pointer;
+    color: white;
+}
+
+#buyRequestsBtn:hover {
+    background-color:rgb(226, 226, 226);
+    color:black;
+}
+
+#grabRequestsBtn {
+    position:absolute;
+    top:300px;
+    width:100%;
+    height:100px;
+    line-height:100px;
+    font-size:25px;
+    text-align:center;
+    margin:auto;
+    font-family:'Open Sans', san-serif;
+    cursor:pointer;
+    color: white;
+}
+
+#grabRequestsBtn:hover {
+    background-color:rgb(226, 226, 226);
+    color:black;
+}
+
+#settingsBtn {
+    position:absolute;
+    top:400px;
+    width:100%;
+    height:100px;
+    line-height:100px;
+    font-size:25px;
+    text-align:center;
+    margin:auto;
+    font-family:'Open Sans', san-serif;
+    cursor:pointer;
+    color: white;
+}
+
+#settingsBtn:hover {
+    background-color:rgb(226, 226, 226);
+    color:black;
+}
+ 
+#mainDiv {
+    position:absolute;
+    left:20%;
+    height:100%;
+    width:80%;
+}
+
+.fade-enter-active {
+    transition: opacity 1s
+} 
+   
+.fade-leave-active {
+    transition: opacity 0s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0
+}   
