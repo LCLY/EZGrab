@@ -196,6 +196,26 @@ app.post('/orderstake', function(req, res) {
     });
 });
 
+app.get('/listallorders',function(req,res){
+    // var senderStart = req.body.senderStart;
+    // var senderDestination = req.body.senderDestination;
+    //
+    // if(senderStart == "" ||senderDestination == ""){
+    //     return res.status(400).json({ message: "SenderStart or SenderDestination is empty!"})
+    // }
+
+    var sql = "select * from orders";
+    connection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({message: "Internal Server Error"});
+        }
+        return res.status(200).json(rows);
+    });
+
+
+});
+
 app.get('/senderOrdersGet', function(req, res) {
     var currentUser = req.query.currentUser;
 
@@ -229,6 +249,8 @@ app.get('/recipientOrdersGet', function(req, res) {
         return res.status(200).json(results);
     })
 });
+
+
 
 var port = process.env.PORT || 8000;
 

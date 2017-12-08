@@ -13,7 +13,7 @@
  * Qinmin Wang
  * 
 */
-
+var gOrders = new Array();
 
 function body_onload() {
     // testButton.onclick = button_click;
@@ -21,31 +21,11 @@ function body_onload() {
 }
 
 
-function checkRecommend(graberSta, graberDes, storeLoc, reqestLoc) {
 
+function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc,num,callback){
     if (graberSta == null || graberDes == null || storeLoc == null || reqestLoc == null) {
         return false;
     }
-
-    var timeDiff = 0; //time difference in secs
-
-    timeDiff = calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc);
-
-
-    //if time difference larger than 10 mins, would't recommend
-    if(timeDiff > 1200){
-        console.log("don't recommend!!!");
-        return false;
-
-    }else{
-        console.log("JUST DO IT MAN!!!");
-        return true; 
-
-    }
-
-
-}
-function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
 
     //create queryURL
 
@@ -84,13 +64,6 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
     var queryStr2= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str2);
     var queryStr3= "https://cors-anywhere.herokuapp.com/"+"https://maps.googleapis.com/maps/api/distancematrix/json?" + cleanup(str3);
 
-    // jQuery.get(queryStr1,function(json){
-    //     //var res = JSON.parse(json);
-    //     console.log("response is: !!!!!!!!!!" + json);
-    //     //json.rows[0].elements[0].duration.value
-
-    // });
-
     var duration1;  //graber to store
     var duration2;  //graber to own destination
     var duration3;  //store to requester's location
@@ -105,12 +78,15 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
             duration1 = resp1.rows[0].elements[0].duration.value;
             duration2 = resp1.rows[0].elements[1].duration.value;
 
+            // console.log("duration1 is:!!!!!!!!!!" + duration1);
+            // console.log("duration2 is:!!!!!!!!!!" + duration2);
             $.ajax({
                 url: queryStr2,
                 dataType: 'json',
                 success: function (resp2) {
                     console.log(resp2);
                     duration3 = resp2.rows[0].elements[0].duration.value;
+                    // console.log("duration3 is:!!!!!!!!!!" + duration3);
                     
                     $.ajax({
                         url: queryStr3,
@@ -120,8 +96,21 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
                             //can also work in this way instead of JSON.parse
 
                             duration4 = resp3.rows[0].elements[0].duration.value;
+                            // console.log("duration4 is:!!!!!!!!!!" + duration4);
+                            var diffResult = duration1 + duration3 + duration4 - duration2;
+                            console.log("Difference is:!!!!!" + diffResult);
+                            if(diffResult > 2000){
+                                console.log("don't recommend!!!");
+                                callback(num,false);
 
-                            return duration2 + duration3 + duration4 - duration1;
+
+                            }else{
+                                console.log("JUST DO IT MAN!!!");
+                                callback(num,true);
+
+                            }
+
+
                 
                         },
                         error: function (req, status, err) {
@@ -146,14 +135,6 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
     console.log(queryStr2);
     console.log(queryStr3);
 
-
-
-
-
-
-    
-
-
 }
 
 function cleanup(strQ){
@@ -168,80 +149,53 @@ function cleanup(strQ){
 }
 
 function button2_click(){
-    
-    var Result = checkRecommend("Hilltop, West Lafayette", "LWSN, West Lafayette", "Ford Dinning Court, West Lafayette, IN 47906", "third Street, West Lafayette");
 
-    console.log(Result);
-}
-//
-// function button_click() {
-//
-//     //funtion1
-//     var params = {
-//         url: 'baidu.com',
-//         parameter1: 'value_1',
-//         parameter2: 'value 2',
-//         parameter3: 'value&3'
-//     };
-//
-//     var esc = encodeURIComponent;
-//     var query = Object.keys(params)
-//         .map(k => esc(k) + '=' + esc(params[k]))
-//         .join('&');
-//
-//     //funtion3
-//
-//     var params2 = {folder:"subscriber Ray", file:"LWSN, WestLafayette"+"|"+"Electrical Engineering, WestLafayette, IN", alert:"yes", id:"12"};
-//     var strQ = jQuery.param(params2);
-//     var str = strQ.replace(/%2C%20/g,",");
-//     var tempStr = str.replace(/%20/g,"+");
-//     var ttempStr = tempStr.replace(/%2C/g,",");
-//     var tttempStr = ttempStr.replace(/%7C/g,"|");
-//     //var ttttempStr = tttempStr.replace("%20","");
-//
-//
-//
-//
-//
-//     console.log("function1: " + query);
-//
-//     console.log("function2: " + createURL(params));
-//
-//     console.log("function3: " + tttempStr);
-//
-//
-//
-//
-//
-//
-//     // $.getRequestData = function () {
-//     //     var url = location.search; //获取url中"?"符后的字串
-//     //     var theRequest = {};
-//     //     if (url.indexOf("?") != -1) {
-//     //         var str = url.substr(1);
-//     //         strs = str.split("&");
-//     //         for (var i = 0; i < strs.length; i++) {
-//     //             theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
-//     //         }
-//     //     }
-//     //     return theRequest;
-//     // };
-//
-//     // 生成一个带参数的url
-//
-//
-//
-//
-// }
+    var senderStart = "Hilltop,West Lafayette";
+    var senderDestination = "LWSN, West Lafayette";
 
-function createURL(obj) {
-    var length = obj && obj.length,
-        idx = 0,
-        url = obj.url + '?';
-    for (var key in obj) {
-        if (key != 'url' && obj[key] !== null) {
-            url += (key + '=' + encodeURIComponent(obj[key]) + '&');
+    var url = "http://localhost:8000/";
+
+    try {
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = httpStateChange;
+        httpRequest.onerror = httpError;
+        httpRequest.open("GET", url + "listallorders" , true);
+        httpRequest.setRequestHeader("Content-type", "application/json");
+        httpRequest.send(null);
+    } catch (error) {
+        console.log(error);
+    }
+
+    function httpError(){
+        alert("network error");
+    }
+
+    function httpStateChange() {
+        if (httpRequest.readyState === 4){
+            if(httpRequest.status === 200) {
+                var json = httpRequest.responseText;
+                serverResponse = JSON.parse(json);
+                for(var i = 0;i<serverResponse.length;i++){
+                    var buyLocationNew = serverResponse[i].BuyLocation;
+                    var dropLocationNew = serverResponse[i].DropLocation;
+                    calculateTimeDiff(senderStart,senderDestination,buyLocationNew,dropLocationNew,i,
+                        function(number,result){
+                            console.log("result is:!!!!!!"+result);
+                            if(result===true){
+                                console.log("serverResponse is:!!"+ number);
+                                gOrders.push(serverResponse[number]);
+                                console.log("gOrders now is :???????" + JSON.stringify(gOrders));
+                            }
+
+                        });
+                    console.log("now is looping No...." + i);
+
+                }
+
+            } else {
+                console.log("here");
+            }
         }
     }
-    return url.substring(0, url.lastIndexOf('&'));
+
 }
