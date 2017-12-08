@@ -204,7 +204,7 @@ app.post('/orderstake', function(req, res) {
     }
 
     var sql = "update orders set Sender = ? where ID = ?";
-    var args = [recipient, orderid];
+    var args = [sender, orderid];
     sql = mysql.format(sql, args);
 
     connection.query(sql, function (error, results, field) {

@@ -100,12 +100,22 @@ body {
     background-color:rgb(226, 226, 226);
     color:black;
 }
+
+#navBarDisable {
+    position:absolute;
+    z-index:1;
+    height:100%;
+    width:100%;
+}
  
 #mainDiv {
     position:absolute;
     left:20%;
     height:100%;
     width:80%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background-color:rgba(0, 0, 0, 0.5);
 }
 
 .fade-enter-active {

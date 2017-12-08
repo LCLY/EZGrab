@@ -37,6 +37,7 @@
     width:150px;
     top:50px;
     left:700px;
+    cursor:pointer;
 }
 
 #addBuyRequestBtn {
@@ -44,6 +45,7 @@
     width:150px;
     top:50px;
     left:870px;
+    cursor:pointer;
 }
 
 .orderEntryDiv {
@@ -57,7 +59,12 @@
     border:solid;
     border-width:1px;
     margin:auto auto 10px auto;
+    background-color:rgb(255, 255, 255);
     box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.orderEntryDiv:hover{
+    background-color:rgb(226, 226, 226);
 }
 
 .orderEntryBuyLocationLbl {
@@ -124,6 +131,7 @@
     border-width:1px;
     padding:10px;
     margin:auto auto 10px auto;
+    background-color:rgb(255, 255, 255);
     box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
@@ -173,6 +181,15 @@
     width:80px;
     top:10px;
     left:570px;
+    cursor:pointer;
+}
+
+#closeBtn {
+    position:absolute;
+    width:80px;
+    top:40px;
+    left:570px;
+    cursor:pointer;
 }
 
 #addFormMsg {
@@ -181,4 +198,33 @@
     top:130px;
     left:150px;
     color:red;
+}
+
+#locationField, #controls {
+    position: relative;
+    width: 200px;
+}
+
+#originInput {
+    position:absolute;
+    width:200px;
+    top:50px;
+    left:120px;
+}
+
+#destination {
+    position:absolute;
+    width:200px;
+    top:50px;
+    left:460px;
+}
+
+
+#address td {
+    font-size: 10pt;
+}
+
+#locationField {
+    height: 20px;
+    margin-bottom: 2px;
 }

@@ -2,6 +2,11 @@ function body_onload() {
     Vue.component("order-entry", {
         template: "#order-entry-template",
         props: ["buylocation", "droplocation", "recipient", "notes", "id"],
+        methods: {
+            grabConfirmation: function() {
+                app.grabConfirmation(this.id);
+            }
+        }
     })
 
     Vue.component("buy-entry", {
@@ -27,7 +32,10 @@ function body_onload() {
             addFormMsg:"",
             buyRequestForm:false,
             grabRequestForm:false,
-            settingsForm:false
+            settingsForm:false,
+            disable:true,
+            grabConfirm:false,
+            orderid:"",
         },
 
         methods: {
@@ -102,6 +110,7 @@ function body_onload() {
 
                             app.orders = serverResponse;
                             app.signIn = true;
+                            app.disable = false;
                         } else {
                             var json = httpRequest.responseText;
                             serverResponse = JSON.parse(json);
@@ -154,9 +163,6 @@ function body_onload() {
                 }
             },
 
-            
-
-            
             buyRequest: function(){
                 var url = "http://localhost:8000/";
                 var currentUser = sessionStorageGet("Username",null);
@@ -294,10 +300,8 @@ function body_onload() {
             },
 
             recommendMe: function () {
-
                 // var sth = recommend(originInput.value, destination.value);
                 // console.log("Order is : ******** " + sth);
-
 
                 var gOrders = new Array();
 
@@ -389,27 +393,21 @@ function body_onload() {
                                                 callback(num, true);
 
                                             }
-
-
-
                                         },
                                         error: function (req, status, err) {
                                             console.log('Something went wrong', status, err);
                                         }
                                     });
-
                                 },
                                 error: function (req, status, err) {
                                     console.log('Something went wrong', status, err);
                                 }
                             });
-
                         },
                         error: function (req, status, err) {
                             console.log('Something went wrong', status, err);
                         }
                     });
-
 
                     console.log(queryStr1);
                     console.log(queryStr2);
@@ -425,7 +423,6 @@ function body_onload() {
                     var tttempStr = ttempStr.replace(/%7C/g, "|");
 
                     return tttempStr;
-
                 }
 
                 function recommend(origin, destination) {
@@ -472,28 +469,64 @@ function body_onload() {
                                                 console.log("gOrders now is :???????" + JSON.stringify(gOrders));
                                                 app.orders = gOrders;
                                             }
-
                                         });
                                     console.log("now is looping No...." + i);
-
-
                                 }
-
                             } else {
                                 console.log("here");
                             }
                         }
-
-
                     }
-
                 }
-
-
 
                 recommend(originInput.value, destination.value);
 
             },
+
+            grabOrder: function() {
+                var url = "http://localhost:8000/";
+                
+                var currentUser = sessionStorageGet("Username", null);
+
+                try {
+                    var httpRequest = new XMLHttpRequest();
+                    httpRequest.onreadystatechange = httpStateChange;
+                    httpRequest.onerror = httpError;
+                    httpRequest.open("POST", url + "orderstake", true);
+                    httpRequest.setRequestHeader("Content-type", "application/json");
+                    httpRequest.send(JSON.stringify({
+                        sender: currentUser,
+                        orderid: app.orderid,
+                    }));
+                } catch (error) {
+                    alert("error");
+                }
+
+                function httpError() {
+                    alert("network error");
+                }
+
+                function httpStateChange() {
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            console.log(serverResponse);
+                            app.retrieveOrders();
+                            app.grabConfirm = false;
+                        } else {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            app.addFormMsg = serverResponse.message;
+                        }
+                    }
+                }
+            },
+
+            grabConfirmation: function(orderid) {
+                app.grabConfirm = true;
+                app.orderid = orderid;
+            }
 
         }
     });

@@ -1,0 +1,37 @@
+#grabConfirmation {
+    position:absolute;
+    z-index:1;
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    margin:auto;
+    padding:10px;
+    border-style:solid;
+    border-width:1px;
+    width:600px;
+    height:30px;
+    background-color:rgb(255, 255, 255);
+    font-family:'Open Sans', san-serif;
+    box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+#grabConfirmationMsg {
+    position:absolute;
+    left:30px;
+    top:10px;
+}
+
+#grabConfirmationYesBtn {
+    position:absolute;
+    width:100px;
+    left:370px;
+    top:10px;
+}
+
+#grabConfirmationNoBtn {
+    position:absolute;
+    width:100px;
+    left:500px;
+    top:10px;
+}
