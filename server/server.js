@@ -35,15 +35,15 @@ app.post('/createAccount', function (req, res) {
     var email = req.body.email;
 
     if (username == null) {
-        return res.status(401).json({ message: "Invalid username."});
+        return res.status(400).json({ message: "Invalid username."});
     } 
 
     if (password == null) {
-        return res.status(402).json({ message: "Invalid password"});
+        return res.status(400).json({ message: "Invalid password"});
     }
 
     if (email == null) {
-        return res.status(403).json({ message: "Invalid email"});
+        return res.status(400).json({ message: "Invalid email"});
     }
 
     var sql = "insert into userAccounts (Username, Password, Email) values (?, ?, ?)";
@@ -53,7 +53,7 @@ app.post('/createAccount', function (req, res) {
     connection.query(sql, function (error, results, fields) {
         if (error) {
             console.log(error);
-            return res.status(404).json({ message: "Username has been taken"});
+            return res.status(400).json({ message: "Username has been taken"});
         }
 
         return res.status(200).json({ message: "Success" });
@@ -65,7 +65,7 @@ app.post('/signin', function (req, res) {
     var password = req.body.password;
 
     if (username == null || password == null) {
-        return res.status(405).json({ message: "Invalid username or password"});
+        return res.status(400).json({ message: "Invalid username or password"});
     }
 
     var sql = "select * from userAccounts where Username = ? and Password = ?";
@@ -75,14 +75,50 @@ app.post('/signin', function (req, res) {
     connection.query(sql, function (error, results, fields) {
         if (error) {
             console.log(error);
-            return res.status(405).json({ message: "Invalid username or password"});
+            return res.status(500).json({ message: "Internal Server Error"});
         }
 
         if (results.length === 0) {
-            return res.status(405).json({ message: "Invalid username or password"});
+            return res.status(400).json({ message: "Invalid username or password"});
         }
 
         return res.status(200).json({ message: "Success"});
+    });
+});
+
+app.post('/ordersadd', function (req, res) {
+    var buyLocation = req.body.buyLocation;
+    var dropLocation = req.body.dropLocation;
+    var sender = req.body.sender;
+    var notes = req.body.notes;
+
+    if (!buyLocation) {
+        return res.status(400).json({ message: "Buy Location is empty"});
+    }
+
+    if (!dropLocation) {
+        return res.status(400).json({ message: "Drop Location is empty"});
+    }
+
+    if (!sender) {
+        return res.status(400).json({ message: "Sender is empty"});
+    }
+
+    if (!notes) {
+        return res.status(400).json({ message: "Notes is empty"});
+    }
+
+    var sql = "insert into orders (BuyLocation, DropLocation, Sender, Notes) values (?, ?, ?, ?)";
+    var args = [buyLocation, dropLocation, sender, notes];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql, function (error, results, fields) {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal Server Error"});
+        }
+
+        return res.status(200).json({ message: "Success" });
     });
 });
 
