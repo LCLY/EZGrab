@@ -50,8 +50,8 @@ app.post('/createAccount', function (req, res) {
         return res.status(400).json({ message: "Invalid mobile number" });
     }*/
 
-    var sql = "insert into userAccounts (Username, Password, Email, MobileNumber) values (?, ?, ?, ?)";
-    var args = [username, password, email, mobileNumber];
+    var sql = "insert into userAccounts (Username, Password, Email) values (?, ?, ?)";
+    var args = [username, password, email];
     sql = mysql.format(sql, args);
 
     connection.query(sql, function (error, results, fields) {
