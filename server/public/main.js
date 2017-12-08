@@ -139,6 +139,9 @@ function body_onload() {
                 }
             },
 
+            recommendMe: function() {
+                app.orders = recommend(origin.value, destination.value);
+            }
         }
     });
 }
