@@ -239,9 +239,6 @@ function body_onload() {
                 app.grabRequest();
             }
 
-            recommendMe: function() {
-                app.orders = recommend(origin.value, destination.value);
-            }
         }
     });
 }
