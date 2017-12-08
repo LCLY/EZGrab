@@ -40,7 +40,7 @@ function body_onload() {
 
         methods: {
             checkSignIn: function() {
-                var url = "http://localhost:8000/";
+                var url = "http://18.216.191.121:8000/";
 
                 try {
                     var httpRequest = new XMLHttpRequest();
@@ -86,7 +86,7 @@ function body_onload() {
             },
 
             retrieveOrders: function() {
-                var url = "http://localhost:8000/";
+                var url = "http://18.216.191.121:8000/";
                 
                 try {
                     var httpRequest = new XMLHttpRequest();
@@ -121,7 +121,7 @@ function body_onload() {
             },
 
             addBuyRequest: function() {
-                var url = "http://localhost:8000/";
+                var url = "http://18.216.191.121:8000/";
 
                 var currentUser = sessionStorageGet("Username", null);
                 
@@ -164,7 +164,7 @@ function body_onload() {
             },
 
             buyRequest: function(){
-                var url = "http://localhost:8000/";
+                var url = "http://18.216.191.121:8000/";
                 var currentUser = sessionStorageGet("Username",null);
                 try {
                     var httpRequest = new XMLHttpRequest();
@@ -198,7 +198,7 @@ function body_onload() {
             },
 
             grabRequest: function () {
-                var url = "http://localhost:8000/";
+                var url = "http://18.216.191.121:8000/";
                 var currentUser = sessionStorageGet("Username", null);
                 try {
                     var httpRequest = new XMLHttpRequest();
@@ -232,7 +232,7 @@ function body_onload() {
             },
 
             settingsUpdate: function(){
-                var url = "http://localhost:8000/";
+                var url = "http://18.216.191.121:8000/";
 
                 var currentUser = sessionStorageGet("Username", null);
 
@@ -435,7 +435,7 @@ function body_onload() {
                     console.log("senderStart++++++++++++" + senderStart);
                     console.log("senderDestination-------------" + senderDestination);
 
-                    var url = "http://localhost:8000/";
+                    var url = "http://18.216.191.121:8000/";
 
                     try {
                         var httpRequest = new XMLHttpRequest();
@@ -484,7 +484,7 @@ function body_onload() {
             },
 
             grabOrder: function() {
-                var url = "http://localhost:8000/";
+                var url = "http://18.216.191.121:8000/";
                 
                 var currentUser = sessionStorageGet("Username", null);
 
