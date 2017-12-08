@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="grabRequestForm.css">
         <script src="https://vuejs.org/js/vue.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/x-template" id="order-entry-template">
             <div class="orderEntryDiv">
                 <label class="orderEntryBuyLocationLbl"> Buy Location: </label>
@@ -58,7 +58,7 @@
                 <div id="homeBtn" v-on:click="setHome">HOME</div>
                 <div id="buyRequestsBtn" v-on:click="setBuyRequests">BUY REQUESTS</div>
                 <div id="grabRequestsBtn" v-on:click="setGrabRequests">GRAB REQUESTS</div>
-                <div id="settingsBtn" v-on:click="settingsForm=true; grabRequestForm = false; buyRequestForm">SETTINGS</div>
+                <div id="settingsBtn" v-on:click="setSettings">SETTINGS</div>
             </div>
 
 
@@ -90,12 +90,12 @@
                 <transition name="fade">
                     <div id="mainForm" v-if="signIn && !buyRequestForm && !grabRequestForm && !settingsForm">
                         <label id="originLbl">Origin:</label>
-                        <input id="origin" type="text" />
+                        <input id="originInput" type="text" />
 
                         <label id="destinationLbl">Destination:</label>
                         <input id="destination" type="text" />
 
-                        <button id="recommendMeBtn">Recommend Me!</button>
+                        <button id="recommendMeBtn" v-on:click="recommendMe">Recommend Me!</button>
 
                         <button id="addBuyRequestBtn" v-on:click="showAddForm = true">Add Buy Request</button>
                         
@@ -164,12 +164,12 @@
                     </div>
                 </transition>
 
-                <!--<transition name="fade">
+                <transition name="fade">
                     <div id="settingsForm" v-if="settingsForm && !grabRequestForm && !buyRequestForm">
                         <div>HERE3</div>
                 
                     </div>
-                </transition>-->
+                </transition>
 
 
             </div>
