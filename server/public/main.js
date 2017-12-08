@@ -36,6 +36,8 @@ function body_onload() {
             disable:true,
             grabConfirm:false,
             orderid:"",
+            createAccount:false,
+            createAccountMsg:"",
         },
 
         methods: {
@@ -526,6 +528,46 @@ function body_onload() {
             grabConfirmation: function(orderid) {
                 app.grabConfirm = true;
                 app.orderid = orderid;
+            },
+
+            createAccountMtd: function() {
+                var url = "http://18.216.191.121:8000/";
+                
+                var currentUser = sessionStorageGet("Username", null);
+
+                try {
+                    var httpRequest = new XMLHttpRequest();
+                    httpRequest.onreadystatechange = httpStateChange;
+                    httpRequest.onerror = httpError;
+                    httpRequest.open("POST", url + "createAccount", true);
+                    httpRequest.setRequestHeader("Content-type", "application/json");
+                    httpRequest.send(JSON.stringify({
+                        username: createAccountUsername.value,
+                        password: createAccountPassword.value,
+                        email:createAccountEmail.value,
+                    }));
+                } catch (error) {
+                    alert("error");
+                }
+
+                function httpError() {
+                    alert("network error");
+                }
+
+                function httpStateChange() {
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            console.log(serverResponse);
+                            app.createAccount = false;
+                        } else {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            app.createAccountMsg = serverResponse.message;
+                        }
+                    }
+                }
             }
 
         }

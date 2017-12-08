@@ -87,7 +87,24 @@
                         <input id="rememberChkBox" type="checkbox"/>-->
 
                         <label id="createAccountLbl">New to EZGrab?</label>
-                        <button id="createAccountBtn">Create Account</button>
+                        <button id="createAccountBtn" v-on:click="createAccount = true">Create Account</button>
+
+                        <div id="createAccountDiv" v-show="createAccount">
+                            <label id="createAccountHdr">CREATE ACCOUNT</label>
+                            <label id="createAccountUsernameLbl">Username</label>
+                            <input id="createAccountUsername" type="text" />
+    
+                            <label id="createAccountPasswordLbl">Password</label>
+                            <input id="createAccountPassword" type="password" />
+
+                            <label id="createAccountEmailLbl">Email</label>
+                            <input id="createAccountEmail" type="text" />
+
+                            <label id="createAccountMsg">{{ createAccountMsg }}</label>
+
+                            <button id="createAccount" v-on:click="createAccountMtd">Create Account</button>
+                            <button id="cancelCreateAccountBtn" v-on:click="createAccount = false">Cancel</button>
+                        </div>
 
                         <label id="signInMsg">{{ signInMsg }}</label>
                     </div>

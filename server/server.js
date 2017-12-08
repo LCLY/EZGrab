@@ -32,7 +32,7 @@ app.post('/createAccount', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
     var email = req.body.email;
-    var mobileNumber = req.body.mobileNumber;
+    //var mobileNumber = req.body.mobileNumber;
 
     if (username == null) {
         return res.status(400).json({ message: "Invalid username."});
@@ -46,9 +46,9 @@ app.post('/createAccount', function (req, res) {
         return res.status(400).json({ message: "Invalid email"});
     }
 
-    if (mobileNumber == null) {
+    /*if (mobileNumber == null) {
         return res.status(400).json({ message: "Invalid mobile number" });
-    }
+    }*/
 
     var sql = "insert into userAccounts (Username, Password, Email, MobileNumber) values (?, ?, ?, ?)";
     var args = [username, password, email, mobileNumber];
