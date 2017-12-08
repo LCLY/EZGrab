@@ -15,10 +15,10 @@
 */
 var gOrders = new Array();
 
-function body_onload() {
-    // testButton.onclick = button_click;
-    testButton2.onclick = button2_click;
-}
+// function body_onload() {
+//     // testButton.onclick = button_click;
+//     testButton2.onclick = button2_click;
+// }
 
 
 
@@ -148,10 +148,12 @@ function cleanup(strQ){
 
 }
 
-function button2_click(){
+function recommend(origin, destination){
 
-    var senderStart = "Hilltop,West Lafayette";
-    var senderDestination = "LWSN, West Lafayette";
+    gOrders = new Array();
+
+    var senderStart = origin;
+    var senderDestination = destination;
 
     var url = "http://localhost:8000/";
 
@@ -192,10 +194,13 @@ function button2_click(){
 
                 }
 
+                
+
             } else {
                 console.log("here");
             }
         }
+        return gOrders;
     }
 
 }
