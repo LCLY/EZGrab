@@ -4,6 +4,16 @@ function body_onload() {
         props: ["buylocation", "droplocation", "recipient", "notes", "id"],
     })
 
+    Vue.component("buy-entry", {
+        template: "#buy-entry-template",
+        props: ["buylocation", "droplocation", "sender", "notes", "id"],
+    })
+
+    Vue.component("grab-entry", {
+        template: "#grab-entry-template",
+        props: ["buylocation", "droplocation", "recipient", "notes", "id"],
+    })
+
     var app = new Vue({
         el:"#app",
 
@@ -12,7 +22,11 @@ function body_onload() {
             signInMsg:"",
             orders: [],
             showAddForm:false,
+            showBuy:false,
+            showMain:false,
             addFormMsg:"",
+            buyRequestForm:false,
+            grabRequestForm:false,
         },
 
         methods: {
@@ -138,6 +152,92 @@ function body_onload() {
                     }
                 }
             },
+            
+            buyRequest: function(){
+                var url = "http://localhost:8000/";
+                var currentUser = sessionStorageGet("Username",null);
+                try {
+                    var httpRequest = new XMLHttpRequest();
+                    httpRequest.onreadystatechange = httpStateChange;
+                    httpRequest.onerror = httpError;
+                    httpRequest.open("GET", url + "senderOrdersGet?currentUser=" + currentUser, true);
+                    httpRequest.setRequestHeader("Content-type", "application/json");
+                    httpRequest.send(null);
+                } catch (error) {
+                    alert("error");
+                }
+
+                function httpError() {
+                    alert("network error");
+                }
+
+                function httpStateChange() {
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            console.log(serverResponse);
+                            app.orders = serverResponse;
+                        } else {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            app.signInMsg = serverResponse.message;
+                        }
+                    }
+                }
+            },
+
+            grabRequest: function () {
+                var url = "http://localhost:8000/";
+                var currentUser = sessionStorageGet("Username", null);
+                try {
+                    var httpRequest = new XMLHttpRequest();
+                    httpRequest.onreadystatechange = httpStateChange;
+                    httpRequest.onerror = httpError;
+                    httpRequest.open("GET", url + "recipientOrdersGet?currentUser=" + currentUser, true);
+                    httpRequest.setRequestHeader("Content-type", "application/json");
+                    httpRequest.send(null);
+                } catch (error) {
+                    alert("error");
+                }
+
+                function httpError() {
+                    alert("network error");
+                }
+
+                function httpStateChange() {
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            console.log(serverResponse);
+                            app.orders = serverResponse;
+                        } else {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            app.signInMsg = serverResponse.message;
+                        }
+                    }
+                }
+            },
+
+            setHome : function() {
+                app.buyRequestForm = false; 
+                app.grabRequestForm = false;
+                app.retrieveOrders();
+            },
+
+            setBuyRequests : function() {
+                app.buyRequestForm = true; 
+                app.grabRequestForm = false; 
+                app.buyRequest();
+            },
+
+            setGrabRequests : function() {
+                app.grabRequestForm = true; 
+                app.buyRequestForm = false;
+                app.grabRequest();
+            }
 
         }
     });

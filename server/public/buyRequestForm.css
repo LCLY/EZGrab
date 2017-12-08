@@ -1,0 +1,77 @@
+#buyRequestForm {
+    height:100%;
+    width:100%;
+    font-family:'Open Sans', san-serif;
+}
+
+#buyRequestLbl {
+    position:absolute;
+    width:200px;
+    top:30px;
+    left:50px;
+    font-size:30px;
+}
+
+.buyRequestDiv {
+    position:relative;
+    width:650px;
+    height:150px;
+    left:0px;
+    right:0px;
+    top:100px;
+    padding:10px;
+    border:solid;
+    border-width:1px;
+    margin:auto auto 10px auto;
+    box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
+.buyRequestBuyLocation {
+    top:10px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.buyRequestDropLocationLbl {
+    top:40px;
+    position:absolute;
+    width:650px;
+    right:10px;
+}
+
+.buyRequestDropLocation {
+    top:40px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.buyRequestRecipientLbl {
+    top:70px;
+    position:absolute;
+    width:650px;
+    right:10px;
+}
+
+.buyRequestRecipient {
+    top:70px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.buyRequestNotesLbl {
+    top:100px;
+    position:absolute;
+    width:650px;
+    right:10px;
+}
+
+.buyRequestNotes {
+    top:100px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}

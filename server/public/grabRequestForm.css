@@ -1,0 +1,77 @@
+#grabRequestForm {
+    height:100%;
+    width:100%;
+    font-family:'Open Sans', san-serif;
+}
+
+#grabRequestLbl {
+    position:absolute;
+    width:250px;
+    top:30px;
+    left:50px;
+    font-size:30px;
+}
+
+.grabRequestDiv {
+    position:relative;
+    width:650px;
+    height:150px;
+    left:0px;
+    right:0px;
+    top:100px;
+    padding:10px;
+    border:solid;
+    border-width:1px;
+    margin:auto auto 10px auto;
+    box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+
+.grabRequestBuyLocation {
+    top:10px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.grabRequestDropLocationLbl {
+    top:40px;
+    position:absolute;
+    width:650px;
+    right:10px;
+}
+
+.grabRequestDropLocation {
+    top:40px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.grabRequestRecipientLbl {
+    top:70px;
+    position:absolute;
+    width:650px;
+    right:10px;
+}
+
+.grabRequestRecipient {
+    top:70px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}
+
+.grabRequestNotesLbl {
+    top:100px;
+    position:absolute;
+    width:650px;
+    right:10px;
+}
+
+.grabRequestNotes {
+    top:100px;
+    position:absolute;
+    width:650px;
+    left:130px;
+}

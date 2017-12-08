@@ -221,7 +221,7 @@ app.post('/orderstake', function(req, res) {
 app.get('/senderOrdersGet', function(req, res) {
     var currentUser = req.query.currentUser;
 
-    var sql = "select * from orders where Sender = ?";
+    var sql = "select * from orders where Recipient = ?";
     var args = [currentUser];
     sql = mysql.format(sql, args);
 
@@ -238,7 +238,7 @@ app.get('/senderOrdersGet', function(req, res) {
 app.get('/recipientOrdersGet', function(req, res) {
     var currentUser = req.query.currentUser;
 
-    var sql = "select * from orders where Recipient = ?";
+    var sql = "select * from orders where Sender = ?";
     var args = [currentUser];
     sql = mysql.format(sql, args);
 
