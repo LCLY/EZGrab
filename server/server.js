@@ -162,7 +162,7 @@ app.post('/signin', function (req, res) {
 app.post('/ordersadd', function (req, res) {
     var buyLocation = req.body.buyLocation;
     var dropLocation = req.body.dropLocation;
-    var sender = req.body.sender;
+    var recipient = req.body.recipient;
     var notes = req.body.notes;
 
     if (!buyLocation) {
@@ -173,16 +173,16 @@ app.post('/ordersadd', function (req, res) {
         return res.status(400).json({ message: "Drop Location is empty"});
     }
 
-    if (!sender) {
-        return res.status(400).json({ message: "Sender is empty"});
+    if (!recipient) {
+        return res.status(400).json({ message: "Recipient is empty"});
     }
 
     if (!notes) {
         return res.status(400).json({ message: "Notes is empty"});
     }
 
-    var sql = "insert into orders (BuyLocation, DropLocation, Sender, Notes) values (?, ?, ?, ?)";
-    var args = [buyLocation, dropLocation, sender, notes];
+    var sql = "insert into orders (BuyLocation, DropLocation, Recipient, Notes) values (?, ?, ?, ?)";
+    var args = [buyLocation, dropLocation, recipient, notes];
     sql = mysql.format(sql, args);
 
     connection.query(sql, function (error, results, fields) {
@@ -196,14 +196,14 @@ app.post('/ordersadd', function (req, res) {
 });
 
 app.post('/orderstake', function(req, res) {
-    var recipient = req.body.recipient;
+    var sender = req.body.sender;
     var orderid = req.body.orderid;
 
-    if (!recipient) {
-        return res.status(400).json({ message: "Recipient is empty"});
+    if (!sender) {
+        return res.status(400).json({ message: "sender is empty"});
     }
 
-    var sql = "update orders set Recipient = ? where ID = ?";
+    var sql = "update orders set Sender = ? where ID = ?";
     var args = [recipient, orderid];
     sql = mysql.format(sql, args);
 
@@ -237,6 +237,23 @@ app.get('/senderOrdersGet', function(req, res) {
 
 app.get('/recipientOrdersGet', function(req, res) {
     var currentUser = req.query.currentUser;
+
+    var sql = "select * from orders where Recipient = ?";
+    var args = [currentUser];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql,function (error, results, field) {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal Server Error"});
+        }
+
+        return res.status(200).json(results);
+    })
+});
+
+app.get('/getOpenOrders', function(req, res) {
+    var currentUser = "";
 
     var sql = "select * from orders where Recipient = ?";
     var args = [currentUser];

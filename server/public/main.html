@@ -7,6 +7,15 @@
         <link rel="stylesheet" href="mainform.css">
         <script src="https://vuejs.org/js/vue.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
+
+        <script type="text/x-template" id="order-entry-template">
+            <div class="orderEntryDiv">
+                <label class="orderEntryBuyLocationLbl"> {{ buylocation }}</label>
+                <label class="orderEntryDropLocationLbl"> {{ droplocation }}</label>
+                <label class="orderEntryRecipientLbl"> {{ recipient }}</label>
+                <label class="orderEntryNotesLbl"> {{ notes }}</label>
+            </div>
+        </script>
     </head>
 
     <body onload="body_onload()">
@@ -47,11 +56,27 @@
                 
                 <transition name="fade">
                     <div id="mainForm" v-if="signIn">
-                        
+                        <label id="buyLocationLbl">Buy Location:</label>
+                        <input id="buyLocation" type="text" />
+
+                        <label id="dropLocationLbl">Drop Location:</label>
+                        <input id="dropLocation" type="text" />
+
+                        <button id="recommendMe">Recommend Me!</button>
                     </div>
                 </transition>
 
-                </div>
+
+                <transition-group name="fade">
+                    <order-entry v-for="order in orders" 
+                        v-bind:key="order"
+                        v-bind:buylocation="order.BuyLocation" 
+                        v-bind:droplocation="order.DropLocation"
+                        v-bind:recipient="order.Recipient" 
+                        v-bind:notes="order.Notes" 
+                        v-bind:id ="order.ID">
+                    </order-entry>
+                </transition-group>
             </div>
 
         </div>

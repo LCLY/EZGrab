@@ -1,11 +1,17 @@
 function body_onload() {
+    Vue.component("order-entry", {
+        template: "#order-entry-template",
+        props: ["buylocation", "droplocation", "recipient", "notes", "id"],
+    })
+
     var app = new Vue({
         el:"#app",
 
         data: {
             signIn:false,
             signInMsg:"",
-            
+            orders: [],
+
         },
 
         methods: {
@@ -43,8 +49,7 @@ function body_onload() {
                             } else {
                                 localStorageSet("Username", "");
                             }*/
-
-                            app.signIn = true;
+                            app.retrieveOrders();
                         } else {
                             var json = httpRequest.responseText;
                             serverResponse = JSON.parse(json);
@@ -53,6 +58,42 @@ function body_onload() {
                     }
                 }
             },
+
+            retrieveOrders: function() {
+                var url = "http://localhost:8000/";
+                
+                try {
+                    var httpRequest = new XMLHttpRequest();
+                    httpRequest.onreadystatechange = httpStateChange;
+                    httpRequest.onerror = httpError;
+                    httpRequest.open("GET", url + "getOpenOrders" , true);
+                    httpRequest.setRequestHeader("Content-type", "application/json");
+                    httpRequest.send(null);
+                } catch (error) {
+                    alert("error");
+                }
+
+                function httpError(){
+                    alert("network error");
+                }
+            
+                function httpStateChange() {
+                    if (httpRequest.readyState === 4){
+                        if(httpRequest.status === 200) {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            console.log(serverResponse);
+
+                            app.orders = serverResponse;
+                            app.signIn = true;
+                        } else {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            app.signInMsg = serverResponse.message;
+                        }
+                    }
+                }
+            }
 
         }
     });
