@@ -4,18 +4,22 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Places Searchbox</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
         #map {
-            height: 100%;
+            height: 50%;
+            width: 50%;
         }
+
         /* Optional: Makes the sample page fill the window. */
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
+
         .controls {
             margin-top: 10px;
             border: 1px solid transparent;
@@ -57,6 +61,7 @@
             font-size: 13px;
             font-weight: 300;
         }
+
         #target {
             width: 345px;
         }
@@ -87,14 +92,14 @@
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
         // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
+        map.addListener('bounds_changed', function () {
             searchBox.setBounds(map.getBounds());
         });
 
         var markers = [];
         // Listen for the event fired when the user selects a prediction and retrieve
         // more details for that place.
-        searchBox.addListener('places_changed', function() {
+        searchBox.addListener('places_changed', function () {
             var places = searchBox.getPlaces();
 
             if (places.length == 0) {
@@ -102,14 +107,14 @@
             }
 
             // Clear out the old markers.
-            markers.forEach(function(marker) {
+            markers.forEach(function (marker) {
                 marker.setMap(null);
             });
             markers = [];
 
             // For each place, get the icon, name and location.
             var bounds = new google.maps.LatLngBounds();
-            places.forEach(function(place) {
+            places.forEach(function (place) {
                 if (!place.geometry) {
                     console.log("Returned place contains no geometry");
                     return;
@@ -138,11 +143,35 @@
                 }
             });
             map.fitBounds(bounds);
+            map.addListener('click', function (IconMouseEvent) {
+                var string = IconMouseEvent.placeId;
+                console.log(string);
+                $.ajax({
+                    url: "https://cors-anywhere.herokuapp.com/"
+                    + "https://maps.googleapis.com/maps/api/place/details/json?placeid="
+                    + string
+                    + "&key=AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU&language=en",
+                    dataType: 'json',
+                    success: function (resp) {
+                        var str = resp.result.name + ", " + resp.result.formatted_address;
+                        input.value = str;
+
+                        console.log("return is:" + str);
+                        // var address =
+                        // console.log();
+                        //can also work in this way instead of JSON.parse
+
+                    },
+                    error: function (req, status, err) {
+                        console.log('Something went wrong', status, err);
+                    }
+                });
+            })
         });
     }
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU&libraries=places&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU&libraries=places&callback=initAutocomplete&language=en"
         async defer></script>
 </body>
 </html>

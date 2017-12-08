@@ -16,7 +16,7 @@
 
 
 function body_onload() {
-    testButton.onclick = button_click;
+    // testButton.onclick = button_click;
     testButton2.onclick = button2_click;
 }
 
@@ -34,11 +34,11 @@ function checkRecommend(graberSta, graberDes, storeLoc, reqestLoc) {
 
     //if time difference larger than 10 mins, would't recommend
     if(timeDiff > 1200){
-        console.log("don't recommend!!!")
+        console.log("don't recommend!!!");
         return false;
 
     }else{
-        console.log("JUST DO IT MAN!!!")
+        console.log("JUST DO IT MAN!!!");
         return true; 
 
     }
@@ -53,7 +53,8 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
         origins: graberSta,
         destinations: storeLoc + "|" + graberDes,
         mode: "walking",  
-        key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU"
+        key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU",
+        language: "en"
 
     };
    
@@ -61,17 +62,19 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
         origins: storeLoc,
         destinations: reqestLoc,
         mode: "walking",
-        key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU"
+        key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU",
+        language: "en"
 
-    }
+    };
 
     var params3 = {
         origins: reqestLoc,
         destinations: graberDes,
         mode: "walking",
-        key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU"
+        key: "AIzaSyBb-Cf0pgRz4yUUFFbFaIecXXFuMnmmBVU",
+        language: "en"
 
-    }
+    };
 
     var str1 = jQuery.param(params1);
     var str2 = jQuery.param(params2);
@@ -117,7 +120,8 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
                             //can also work in this way instead of JSON.parse
 
                             duration4 = resp3.rows[0].elements[0].duration.value;
-                            
+
+                            return duration2 + duration3 + duration4 - duration1;
                 
                         },
                         error: function (req, status, err) {
@@ -142,7 +146,7 @@ function calculateTimeDiff(graberSta, graberDes, storeLoc, reqestLoc){
     console.log(queryStr2);
     console.log(queryStr3);
 
-    return duration2 + duration3 + duration4 - duration1;
+
 
 
 
@@ -169,66 +173,66 @@ function button2_click(){
 
     console.log(Result);
 }
-
-function button_click() {
-
-    //funtion1
-    var params = {
-        url: 'baidu.com',
-        parameter1: 'value_1',
-        parameter2: 'value 2',
-        parameter3: 'value&3'
-    };
-
-    var esc = encodeURIComponent;
-    var query = Object.keys(params)
-        .map(k => esc(k) + '=' + esc(params[k]))
-        .join('&');
-
-    //funtion3
-
-    var params2 = {folder:"subscriber Ray", file:"LWSN, WestLafayette"+"|"+"Electrical Engineering, WestLafayette, IN", alert:"yes", id:"12"};
-    var strQ = jQuery.param(params2);
-    var str = strQ.replace(/%2C%20/g,",");
-    var tempStr = str.replace(/%20/g,"+");
-    var ttempStr = tempStr.replace(/%2C/g,",");
-    var tttempStr = ttempStr.replace(/%7C/g,"|");
-    //var ttttempStr = tttempStr.replace("%20","");
-
-
-
-    
-
-    console.log("function1: " + query);
-
-    console.log("function2: " + createURL(params));
-
-    console.log("function3: " + tttempStr);
-
-
-
-
-
-
-    // $.getRequestData = function () {
-    //     var url = location.search; //获取url中"?"符后的字串
-    //     var theRequest = {};
-    //     if (url.indexOf("?") != -1) {
-    //         var str = url.substr(1);
-    //         strs = str.split("&");
-    //         for (var i = 0; i < strs.length; i++) {
-    //             theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
-    //         }
-    //     }
-    //     return theRequest;
-    // };
-
-    // 生成一个带参数的url
-
-
-
-
-}
+//
+// function button_click() {
+//
+//     //funtion1
+//     var params = {
+//         url: 'baidu.com',
+//         parameter1: 'value_1',
+//         parameter2: 'value 2',
+//         parameter3: 'value&3'
+//     };
+//
+//     var esc = encodeURIComponent;
+//     var query = Object.keys(params)
+//         .map(k => esc(k) + '=' + esc(params[k]))
+//         .join('&');
+//
+//     //funtion3
+//
+//     var params2 = {folder:"subscriber Ray", file:"LWSN, WestLafayette"+"|"+"Electrical Engineering, WestLafayette, IN", alert:"yes", id:"12"};
+//     var strQ = jQuery.param(params2);
+//     var str = strQ.replace(/%2C%20/g,",");
+//     var tempStr = str.replace(/%20/g,"+");
+//     var ttempStr = tempStr.replace(/%2C/g,",");
+//     var tttempStr = ttempStr.replace(/%7C/g,"|");
+//     //var ttttempStr = tttempStr.replace("%20","");
+//
+//
+//
+//
+//
+//     console.log("function1: " + query);
+//
+//     console.log("function2: " + createURL(params));
+//
+//     console.log("function3: " + tttempStr);
+//
+//
+//
+//
+//
+//
+//     // $.getRequestData = function () {
+//     //     var url = location.search; //获取url中"?"符后的字串
+//     //     var theRequest = {};
+//     //     if (url.indexOf("?") != -1) {
+//     //         var str = url.substr(1);
+//     //         strs = str.split("&");
+//     //         for (var i = 0; i < strs.length; i++) {
+//     //             theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+//     //         }
+//     //     }
+//     //     return theRequest;
+//     // };
+//
+//     // 生成一个带参数的url
+//
+//
+//
+//
+// }
 
 function createURL(obj) {
     var length = obj && obj.length,
