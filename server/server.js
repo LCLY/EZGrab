@@ -58,7 +58,33 @@ app.post('/createAccount', function (req, res) {
 
         return res.status(200).json({ message: "Success" });
     });
-})
+});
+
+app.post('/signin', function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+
+    if (username == null || password == null) {
+        return res.status(405).json({ message: "Invalid username or password"});
+    }
+
+    var sql = "select * from userAccounts where Username = ? and Password = ?";
+    var args = [username, password];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql, function (error, results, fields) {
+        if (error) {
+            console.log(error);
+            return res.status(405).json({ message: "Invalid username or password"});
+        }
+
+        if (results.length === 0) {
+            return res.status(405).json({ message: "Invalid username or password"});
+        }
+
+        return res.status(200).json({ message: "Success"});
+    });
+});
 
 var port = process.env.PORT || 8000;
 
