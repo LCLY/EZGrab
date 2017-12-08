@@ -255,7 +255,7 @@ app.get('/recipientOrdersGet', function(req, res) {
 app.get('/getOpenOrders', function(req, res) {
     var currentUser = "";
 
-    var sql = "select * from orders where Recipient = ?";
+    var sql = "select * from orders where Sender = ?";
     var args = [currentUser];
     sql = mysql.format(sql, args);
 
