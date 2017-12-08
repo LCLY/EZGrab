@@ -248,7 +248,9 @@ app.get('/recipientOrdersGet', function(req, res) {
             return res.status(500).json({ message: "Internal Server Error"});
         }
 
-        return res.status(200).json(results);
+        if (results) {
+            return res.status(200).json(results);
+        }
     })
 });
 
@@ -266,6 +268,7 @@ app.get('/getOpenOrders', function(req, res) {
         }
 
         return res.status(200).json(results);
+        
     })
 });
 

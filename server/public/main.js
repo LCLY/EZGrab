@@ -40,7 +40,7 @@ function body_onload() {
 
         methods: {
             checkSignIn: function() {
-                var url = "http://18.216.191.121:8000/";
+                var url = "http://localhost:8000/";
 
                 try {
                     var httpRequest = new XMLHttpRequest();
@@ -73,6 +73,8 @@ function body_onload() {
                             } else {
                                 localStorageSet("Username", "");
                             }*/
+                            app.signIn = true;
+                            app.disable = false;
                             app.retrieveOrders();
                         } else {
                             var json = httpRequest.responseText;
@@ -107,10 +109,8 @@ function body_onload() {
                             var json = httpRequest.responseText;
                             serverResponse = JSON.parse(json);
                             console.log(serverResponse);
-
                             app.orders = serverResponse;
-                            app.signIn = true;
-                            app.disable = false;
+
                         } else {
                             var json = httpRequest.responseText;
                             serverResponse = JSON.parse(json);
@@ -512,8 +512,8 @@ function body_onload() {
                             var json = httpRequest.responseText;
                             serverResponse = JSON.parse(json);
                             console.log(serverResponse);
-                            app.retrieveOrders();
                             app.grabConfirm = false;
+                            app.retrieveOrders();
                         } else {
                             var json = httpRequest.responseText;
                             serverResponse = JSON.parse(json);
