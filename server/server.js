@@ -3,7 +3,6 @@ var bodyParser = require("body-parser");
 var cors = require('cors');
 var mysql = require('mysql');
 
-var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'ezgrabdbinstance.cfsrlrsrxtms.us-east-2.rds.amazonaws.com',
   user     : 'EZGrabUser',
@@ -33,6 +32,7 @@ app.post('/createAccount', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
     var email = req.body.email;
+    var mobileNumber = req.body.mobileNumber;
 
     if (username == null) {
         return res.status(400).json({ message: "Invalid username."});
@@ -46,8 +46,12 @@ app.post('/createAccount', function (req, res) {
         return res.status(400).json({ message: "Invalid email"});
     }
 
-    var sql = "insert into userAccounts (Username, Password, Email) values (?, ?, ?)";
-    var args = [username, password, email];
+    if (mobileNumber == null) {
+        return res.status(400).json({ message: "Invalid mobile number" });
+    }
+
+    var sql = "insert into userAccounts (Username, Password, Email, MobileNumber) values (?, ?, ?, ?)";
+    var args = [username, password, email, mobileNumber];
     sql = mysql.format(sql, args);
 
     connection.query(sql, function (error, results, fields) {
@@ -65,6 +69,7 @@ app.post('/updateAccount', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
     var email = req.body.email;
+    var mobileNumber = req.body.mobileNumber;
 
     if (username != null) {
         var sql = "update userAccounts set Username = ? where Username = ?";
@@ -108,6 +113,22 @@ app.post('/updateAccount', function (req, res) {
             }
     
             return res.status(200).json({ message: "Success"});
+        });
+    }
+
+
+    if (mobileNumber != null) {
+        var sql = "update userAccounts set MobileNumber = ? where Username = ?";
+        var args = [mobileNumber, currentUser];
+        sql = mysql.format(sql, args);
+
+        connection.query(sql, function (error, results, field) {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ message: "Internal Server Error" });
+            }
+
+            return res.status(200).json({ message: "Success" });
         });
     }
 });
@@ -196,6 +217,7 @@ app.post('/orderstake', function(req, res) {
     });
 });
 
+//The orders that the sender decided to take
 app.get('/senderOrdersGet', function(req, res) {
     var currentUser = req.query.currentUser;
 

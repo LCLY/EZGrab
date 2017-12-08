@@ -4,7 +4,7 @@
 //Set
 //$('#txt_name').val(bla);
 
-$(window).on("load", function () {
+$(document).ready(function () {
     $("#backgroundImage").slideDown('slow').fadeIn(2000);
     $("#grootGif").slideDown('slow');
 
@@ -14,12 +14,6 @@ $(window).on("load", function () {
     $('#userRequests').hide();
     $('#acceptedRequests').hide();
     //$("html, body").animate({ scrollTop: $(document).height() }, 1000);
-    $("#btnHome").click(function () {
-        console.log("clicked!");
-        //animation
-        // Handler for .ready() called.
-
-    });
     /*
         $('html, body').animate({
             scrollTop: $('#tableDemo').offset().top
@@ -31,39 +25,96 @@ $(window).on("load", function () {
         }
     });
 
-    $('#btnLogin').click(function () {
-        if ($('#inputLoginUsername').val() === "user" && $('#inputLoginPassword').val() === "password") {
-            console.log($('#inputLoginUsername').val());
-            console.log($('#inputLoginPassword').val());
-            $('#userProfile').show();
-            $('#userRequests').show();
-            $('#acceptedRequests').show();
-            $('#backgroundImage').slideUp('slow').fadeOut(2000);
-            $('#grootGif').slideUp('slow').fadeOut(2000);
-            $("#tableDemo").show();
-            $('#loginModal').modal('hide');
-        } else {
-            alert("Username or password is wrong!");
-        }
+    $('#btnLogin').click(function () { 
+        var url = "18.216.191.121:8000";
+        console.log("comes here")
+
+
+        $.post("http://18.216.191.121:8000/signin",
+        {
+            username: $('#inputLoginUsername').val(),
+            password: $('#inputLoginPassword').val()
+        },
+
+        function (data, status) {
+            console.log("Data: " + data + "\nStatus: " + status);
+            if(status === "success"){
+                sessionStorageSet("CurrentEmployeeID", $('#inputLoginUsername').val());
+                gCurrentEmployeeID = sessionStorageGet("CurrentEmployeeID", null);
+                $('#backgroundImage').hide();
+                $('#grootGif').hide();
+                $('#userProfile').show();
+                $('#userRequests').show();
+                $('#acceptedRequests').show();
+                $("#tableDemo").show();
+                $('#loginModal').modal('hide');
+            }
+        }). fail(function(error) {
+            console.log(error);
+            alert(error.responseJSON.message);
+        });
     });
 
     $('#userProfile').click(function () {
         $('#tableDemo').hide();
         $('#userProfileInformationDiv').show();
+        $.get("http://18.216.191.121:8000/", 
+        function (data, status) {
+            alert("Data: " + data + "\nStatus: " + status);
+            if (status === "success") {
+               
+            }            
+              
+        }).fail(function (error) {
+            console.log(error);
+            alert(error.responseJSON.message);
     });
 
 
     $('#btnHome').click(function () {
-        $('#tableDemo').show(2000).fadeIn(1000);
+        $('#tableDemo').show();
         $('#userProfileInformationDiv').hide();
     });
 
     $("#linkToLogin").click(function () {
         $('#signUpModal').modal('hide');
     });
-
-
-
 });
 
 
+
+
+// These functions encapsulate local and session storage for consistencty and to simplify handling 
+// default values.
+
+function localStorageGet(token, defaultValue) {
+
+    var value = localStorage.getItem(token);
+
+    if (value === null) {
+        return defaultValue;
+    }
+
+    return value;
+}
+
+function localStorageSet(token, value) {
+    localStorage.setItem(token, value);
+}
+
+function sessionStorageGet(token, defaultValue) {
+
+    var value = sessionStorage.getItem(token);
+
+    if (value === null) {
+        return defaultValue;
+    }
+
+    return value;
+}
+
+function sessionStorageSet(token, value) {
+    sessionStorage.setItem(token, value);
+}
+
+});
