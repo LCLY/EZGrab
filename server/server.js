@@ -122,6 +122,28 @@ app.post('/ordersadd', function (req, res) {
     });
 });
 
+app.post('/orderstake', function(req, res) {
+    var recipient = req.body.recipient;
+    var orderid = req.body.orderid;
+
+    if (!recipient) {
+        return res.status(400).json({ message: "Recipient is empty"});
+    }
+
+    var sql = "update orders set Recipient = ? where ID = ?";
+    var args = [recipient, orderid];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql, function (error, results, field) {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal Server Error"});
+        }
+
+        return res.status(200).json({ message: "Success"});
+    });
+});
+
 var port = process.env.PORT || 8000;
 
 app.listen(port, function () {
