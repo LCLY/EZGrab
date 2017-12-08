@@ -4,12 +4,12 @@ var cors = require('cors');
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-  host     : 'ezgrabdbinstance.cfsrlrsrxtms.us-east-2.rds.amazonaws.com',
-  user     : 'EZGrabUser',
-  password : 'CS252Lab6',
-  database : 'ezgrab',
+    host     : 'ezgrabdbinstance.cfsrlrsrxtms.us-east-2.rds.amazonaws.com',
+    user     : 'EZGrabUser',
+    password : 'CS252Lab6',
+    database : 'ezgrab',
 });
- 
+
 var app = express();
 app.use(cors());
 
@@ -36,7 +36,7 @@ app.post('/createAccount', function (req, res) {
 
     if (username == null) {
         return res.status(400).json({ message: "Invalid username."});
-    } 
+    }
 
     if (password == null) {
         return res.status(400).json({ message: "Invalid password"});
@@ -75,13 +75,13 @@ app.post('/updateAccount', function (req, res) {
         var sql = "update userAccounts set Username = ? where Username = ?";
         var args = [username, currentUser];
         sql = mysql.format(sql, args);
-    
+
         connection.query(sql, function (error, results, field) {
             if (error) {
                 console.log(error);
                 return res.status(400).json({ message: "Username has been taken"});
             }
-    
+
             return res.status(200).json({ message: "Success"});
         });
     }
@@ -90,13 +90,13 @@ app.post('/updateAccount', function (req, res) {
         var sql = "update userAccounts set Password = ? where Username = ?";
         var args = [password, currentUser];
         sql = mysql.format(sql, args);
-    
+
         connection.query(sql, function (error, results, field) {
             if (error) {
                 console.log(error);
                 return res.status(500).json({ message: "Internal Server Error"});
             }
-    
+
             return res.status(200).json({ message: "Success"});
         });
     }
@@ -105,13 +105,13 @@ app.post('/updateAccount', function (req, res) {
         var sql = "update userAccounts set Email = ? where Username = ?";
         var args = [email, currentUser];
         sql = mysql.format(sql, args);
-    
+
         connection.query(sql, function (error, results, field) {
             if (error) {
                 console.log(error);
                 return res.status(500).json({ message: "Internal Server Error"});
             }
-    
+
             return res.status(200).json({ message: "Success"});
         });
     }
