@@ -1,4 +1,5 @@
 var express = require("express");
+var bodyParser = require("body-parser");
 var cors = require('cors');
 var mysql = require('mysql');
 
@@ -13,6 +14,10 @@ var connection = mysql.createConnection({
 var app = express();
 app.use(cors());
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+
 app.use(express.static('public'));
 
 connection.connect(function(err) {
@@ -24,14 +29,36 @@ connection.connect(function(err) {
     console.log('connected as id ' + connection.threadId);
 });
 
-/*var sql = "insert into userAccounts (Username, Password) values (?, ?)";
-var args = ['ryan', 'ryan'];
-sql = mysql.format(sql, args);
-console.log(sql);
+app.post('/createAccount', function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+    var email = req.body.email;
 
-connection.query(sql, function (error, results, fields) {
-    if (error) throw error;
-});*/
+    if (username == null) {
+        return res.status(401).json({ message: "Invalid username."});
+    } 
+
+    if (password == null) {
+        return res.status(402).json({ message: "Invalid password"});
+    }
+
+    if (email == null) {
+        return res.status(403).json({ message: "Invalid email"});
+    }
+
+    var sql = "insert into userAccounts (Username, Password, Email) values (?, ?, ?)";
+    var args = [username, password, email];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql, function (error, results, fields) {
+        if (error) {
+            console.log(error);
+            return res.status(404).json({ message: "Username has been taken"});
+        }
+
+        return res.status(200).json({ message: "Success" });
+    });
+})
 
 var port = process.env.PORT || 8000;
 
