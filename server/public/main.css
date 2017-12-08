@@ -108,14 +108,6 @@ body {
     width:80%;
 }
 
-.orderEntryDiv{
-    position:relative;
-    top:300px; 
-    right:0px;  
-    padding:10px;
-    
-}
-
 .fade-enter-active {
     transition: opacity 1s
 } 
