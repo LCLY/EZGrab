@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="mainform.css">
         <link rel="stylesheet" href="buyRequestForm.css">
         <link rel="stylesheet" href="grabRequestForm.css">
+        <link rel="stylesheet" href="settingsForm.css">
+
         <script src="https://vuejs.org/js/vue.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -166,7 +168,19 @@
 
                 <transition name="fade">
                     <div id="settingsForm" v-if="settingsForm && !grabRequestForm && !buyRequestForm">
-                        <div>HERE3</div>
+                        <label id="personalInfoLbl"> Personal Information: </label>
+                        
+                        <label id="usernameLbl"> Username: </label>
+                        <input type="text" id="txtUserName">
+
+                        <label id="passwordLbl"> Password: </label>
+                        <input type="text" id="txtPassword">
+
+                        <label id="emailLbl"> Email: </label>
+                        <input type="text" id="txtEmail">
+
+                        <label id="mobileNumberLbl"> Mobile Number: </label>
+                        <input type="text" id="txtMobileNumber">
                 
                     </div>
                 </transition>

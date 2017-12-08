@@ -27,6 +27,7 @@ function body_onload() {
             addFormMsg:"",
             buyRequestForm:false,
             grabRequestForm:false,
+            settingsForm:false
         },
 
         methods: {
@@ -224,22 +225,72 @@ function body_onload() {
                 }
             },
 
+            settingsUpdate: function(){
+                var url = "http://localhost:8000/";
+
+                var currentUser = sessionStorageGet("Username", null);
+
+                try {
+                    var httpRequest = new XMLHttpRequest();
+                    httpRequest.onreadystatechange = httpStateChange;
+                    httpRequest.onerror = httpError;
+                    httpRequest.open("POST", url + "updateAccount?currentUser=" + currentUser, true);
+                    httpRequest.setRequestHeader("Content-type", "application/json");
+                    httpRequest.send(JSON.stringify({
+                        username: txtUserName.value,
+                        password: txtPassword.value,
+                        email: txtEmail.value,
+                        mobileNumber: txtMobileNumber.value,
+                    }));
+                } catch (error) {
+                    alert("error");
+                }
+
+                function httpError() {
+                    alert("network error");
+                }
+
+                function httpStateChange() {
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            console.log(serverResponse);
+                        } else {
+                            var json = httpRequest.responseText;
+                            serverResponse = JSON.parse(json);
+                            app.addFormMsg = serverResponse.message;
+                        }
+                    }
+                }
+            },
+
             setHome : function() {
                 app.buyRequestForm = false; 
                 app.grabRequestForm = false;
+                app.settingsForm = false;
                 app.retrieveOrders();
             },
 
             setBuyRequests : function() {
                 app.buyRequestForm = true; 
                 app.grabRequestForm = false; 
+                app.settingsForm = false;
                 app.buyRequest();
             },
 
             setGrabRequests : function() {
                 app.grabRequestForm = true; 
                 app.buyRequestForm = false;
+                app.settingsForm = false;
                 app.grabRequest();
+            },
+
+            setSettings: function () {
+                app.grabRequestForm = false;
+                app.buyRequestForm = false;
+                app.settingsForm = true;
+                app.settingsUpdate();
             },
 
             recommendMe: function () {
@@ -443,13 +494,6 @@ function body_onload() {
                 recommend(originInput.value, destination.value);
 
             },
-
-            setSettings: function(){                
-                app.grabRequestForm = false; 
-                app.buyRequestForm = false;
-
-            }
-
 
         }
     });
