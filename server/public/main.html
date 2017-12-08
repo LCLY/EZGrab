@@ -63,20 +63,23 @@
                         <input id="dropLocation" type="text" />
 
                         <button id="recommendMe">Recommend Me!</button>
-                    </div>
-                </transition>
-
 
                 <transition-group name="fade">
                     <order-entry v-for="order in orders" 
-                        v-bind:key="order"
+                        v-bind:key="order" 
                         v-bind:buylocation="order.BuyLocation" 
                         v-bind:droplocation="order.DropLocation"
                         v-bind:recipient="order.Recipient" 
                         v-bind:notes="order.Notes" 
-                        v-bind:id ="order.ID">
+                        v-bind:id="order.ID">
                     </order-entry>
                 </transition-group>
+
+                    </div>
+                </transition>
+
+
+                
             </div>
 
         </div>
