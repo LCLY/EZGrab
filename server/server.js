@@ -196,6 +196,40 @@ app.post('/orderstake', function(req, res) {
     });
 });
 
+app.get('/senderOrdersGet', function(req, res) {
+    var currentUser = req.query.currentUser;
+
+    var sql = "select * from orders where Sender = ?";
+    var args = [currentUser];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql,function (error, results, field) {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal Server Error"});
+        }
+
+        return res.status(200).json(results);
+    })
+});
+
+app.get('/recipientOrdersGet', function(req, res) {
+    var currentUser = req.query.currentUser;
+
+    var sql = "select * from orders where Recipient = ?";
+    var args = [currentUser];
+    sql = mysql.format(sql, args);
+
+    connection.query(sql,function (error, results, field) {
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal Server Error"});
+        }
+
+        return res.status(200).json(results);
+    })
+});
+
 var port = process.env.PORT || 8000;
 
 app.listen(port, function () {
