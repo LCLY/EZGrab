@@ -60,6 +60,58 @@ app.post('/createAccount', function (req, res) {
     });
 });
 
+app.post('/updateAccount', function (req, res) {
+    var currentUser = req.body.currentUser;
+    var username = req.body.username;
+    var password = req.body.password;
+    var email = req.body.email;
+
+    if (username != null) {
+        var sql = "update userAccounts set Username = ? where Username = ?";
+        var args = [username, currentUser];
+        sql = mysql.format(sql, args);
+    
+        connection.query(sql, function (error, results, field) {
+            if (error) {
+                console.log(error);
+                return res.status(400).json({ message: "Username has been taken"});
+            }
+    
+            return res.status(200).json({ message: "Success"});
+        });
+    }
+
+    if (password != null) {
+        var sql = "update userAccounts set Password = ? where Username = ?";
+        var args = [password, currentUser];
+        sql = mysql.format(sql, args);
+    
+        connection.query(sql, function (error, results, field) {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ message: "Internal Server Error"});
+            }
+    
+            return res.status(200).json({ message: "Success"});
+        });
+    }
+
+    if (email != null) {
+        var sql = "update userAccounts set Email = ? where Username = ?";
+        var args = [email, currentUser];
+        sql = mysql.format(sql, args);
+    
+        connection.query(sql, function (error, results, field) {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ message: "Internal Server Error"});
+            }
+    
+            return res.status(200).json({ message: "Success"});
+        });
+    }
+});
+
 app.post('/signin', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
