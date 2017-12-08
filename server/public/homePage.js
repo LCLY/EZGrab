@@ -3,7 +3,7 @@
 
 //Set
 //$('#txt_name').val(bla);
-
+var gQuery;
 $(document).ready(function () {
     $("#backgroundImage").slideDown('slow').fadeIn(2000);
     $("#grootGif").slideDown('slow');
@@ -13,6 +13,7 @@ $(document).ready(function () {
     $('#userProfile').hide();
     $('#userRequests').hide();
     $('#acceptedRequests').hide();
+    $('#ordersAvailable').hide();
     //$("html, body").animate({ scrollTop: $(document).height() }, 1000);
     /*
         $('html, body').animate({
@@ -48,6 +49,7 @@ $(document).ready(function () {
                 $('#acceptedRequests').show();
                 $("#tableDemo").show();
                 $('#loginModal').modal('hide');
+                $('#ordersAvailable').show();
             }
         }). fail(function(error) {
             console.log(error);
@@ -58,26 +60,50 @@ $(document).ready(function () {
     $('#userProfile').click(function () {
         $('#tableDemo').hide();
         $('#userProfileInformationDiv').show();
-        $.get("http://18.216.191.121:8000/", 
-        function (data, status) {
-            alert("Data: " + data + "\nStatus: " + status);
-            if (status === "success") {
-               
-            }            
-              
+        var queryString = "";
+        var url = "http://localhost:8000/senderOrdersGet";
+        queryString = url + "?currentUser=" + sessionStorageGet("CurrentEmployeeID", null);
+        gQuery = queryString;
+        $.get(queryString, function (data) {
+            console.log(data);
+            console.log(data[0].ID);
+            $('#txtFirstName').val(data[0].Recipient);
+            
         }).fail(function (error) {
             console.log(error);
-            alert(error.responseJSON.message);
+            alert(error);
     });
 
 
     $('#btnHome').click(function () {
         $('#tableDemo').show();
-        $('#userProfileInformationDiv').hide();
+        $('#userProfileInformationDiv').hide();       
     });
+
+    $('#btnGenerateOrders').click(function () {
+        var queryString = "";
+        var url = "http://localhost:8000/recipientOrdersGet";
+        queryString = url;
+        gQuery += "&recipientOrdersGet";
+        $.get(gQuery, function (data) {
+            console.log(data);
+            console.log(data[0].ID);
+            $('#txtFirstName').val(data[0].Recipient);
+            for(var i = 0; i < data.length; i++){
+            var div = $("<div id=\"ordersAvailable\">"+ data[i].ID + data[i].BuyLocation + data[i].DropLocation+"</div>");
+            $("#ordersAvailable").append(div);  
+            }  
+
+
+        }).fail(function (error) {
+            console.log(error);
+            alert(error);
+    });
+
 
     $("#linkToLogin").click(function () {
         $('#signUpModal').modal('hide');
+    });
     });
 });
 

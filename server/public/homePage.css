@@ -5,15 +5,6 @@ body{
     background-color:#E9BD73;
 }
 
-#grootGif{
-    display:none;
-    position:relative;
-    top:200px;
-    left:25px;
-    width:600px;
-    z-index:1;
-}
-
 .navbar{
     position:fixed;
     width:100%;
@@ -23,7 +14,7 @@ body{
 #backgroundImage {   
     display: none;
     position:relative;
-    top:-100px;
+    top:50px;
     height:600px;
     width:1000px;
 }
@@ -310,3 +301,14 @@ body{
     bottom:190px;
 }
 
+#ordersAvailable{
+    position:relative;
+    margin:auto;
+    background-color:white;
+    top:200px;
+    right:0px;
+    left:0px;
+    height:200px;
+    width:300px;
+    border:1px black solid;
+}
