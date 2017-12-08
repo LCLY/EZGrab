@@ -14,17 +14,17 @@
             width: 200px;
         }
 
-        #autocomplete1 {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 150px;
+        #originInput {
+            position:absolute;
+            width:200px;
+            top:50px;
+            left:120px;
         }
-        #autocomplete2 {
-            position: absolute;
-            top: 0px;
-            left: 300px;
-            width: 150px;
+        #destination {
+            position:absolute;
+            width:200px;
+            top:50px;
+            left:460px;
         }
 
 
@@ -41,31 +41,31 @@
 
 <body>
 <div id="locationField">
-    <input id="autocomplete1" placeholder="Enter your address"
+    <input id="originInput" placeholder="Enter your address"
            onFocus="geolocate()" type="text"></input>
-    <input id="autocomplete2" placeholder="Enter your address"
+    <input id="destination" placeholder="Enter your address"
            onFocus="geolocate()" type="text"></input>
 </div>
 
 <script>
 
 
-    var placeSearch, autocomplete1,autocomplete2;
+    var placeSearch, originInput,destination;
 
 
     function initAutocomplete() {
 
-        autocomplete1 = new google.maps.places.Autocomplete(
-            (document.getElementById('autocomplete1')),
+        originInput = new google.maps.places.Autocomplete(
+            (document.getElementById('originInput')),
             {types: ['geocode']});
 
-        autocomplete2 = new google.maps.places.Autocomplete(
-            (document.getElementById('autocomplete2')),
+        destination = new google.maps.places.Autocomplete(
+            (document.getElementById('destination')),
             {types: ['geocode']});
 
 
-        autocomplete1.addListener('place_changed', fillInAddress);
-        autocomplete2.addListener('place_changed', fillInAddress);
+        originInput.addListener('place_changed', fillInAddress);
+        destination.addListener('place_changed', fillInAddress);
     }
 
     function geolocate() {
@@ -79,8 +79,8 @@
                     center: geolocation,
                     radius: position.coords.accuracy
                 });
-                autocomplete1.setBounds(circle.getBounds());
-                autocomplete2.setBounds(circle.getBounds());
+                originInput.setBounds(circle.getBounds());
+                destination.setBounds(circle.getBounds());
 
             });
         }
